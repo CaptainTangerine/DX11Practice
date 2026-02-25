@@ -16,6 +16,9 @@
     <Filter Include="App\Renderer">
       <UniqueIdentifier>{8ad4371c-deaf-4dcc-8013-20760b2ef794}</UniqueIdentifier>
     </Filter>
+    <Filter Include="App\Graphics">
+      <UniqueIdentifier>{e3150826-5275-40d2-89c9-88ff397b37e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="Input.cpp">
       <Filter>App\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>App\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -52,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>App\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>App\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

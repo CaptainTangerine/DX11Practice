@@ -2,16 +2,18 @@
 
 class UInput
 {
-private:
+public:
 	UInput()  = default;
 	~UInput() = default;
 
+private:
 	UInput(const UInput& rhs) = delete;
 	UInput& operator=(const UInput& rhs) = delete;
 
 public:
 	bool Initialize();
 	void Update();
+	void Release();
 
 	bool IsKeyDown(int vKey);
 	bool IsKeyHeld(int vKey);

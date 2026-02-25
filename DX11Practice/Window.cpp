@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Window.h"
 
+
 bool UWindow::Initialize(HINSTANCE hInstance, int width, int height)
 {
 	m_hInstance = hInstance;

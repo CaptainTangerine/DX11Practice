@@ -7,5 +7,8 @@ public:
 
 public:
 
+private:
+	ID3D11DepthStencilView* DepthStensilView = { nullptr };
+
 };
 
