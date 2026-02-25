@@ -11,6 +11,12 @@
 *.userosscache
 *.sln.docstates
 *.vcxproj.user
+*.vsidx
+*.db
+*.db-shm
+*.db-wal
+*.opendb
+*.ipch
 
 # -----------------------------------------------
 # 빌드 결과물
