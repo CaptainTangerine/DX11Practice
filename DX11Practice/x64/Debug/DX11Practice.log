@@ -1,0 +1,15 @@
+﻿  App.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3179,27): error C2027: 정의되지 않은 형식 'UInput'을(를) 사용했습니다.
+C:\DX11Practice\DX11Practice\App.h(3,7): message : 'UInput' 선언을 참조하십시오.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3178,23): message : 클래스 템플릿 멤버 함수 'void std::default_delete<UInput>::operator ()(_Ty *) noexcept const'을(를) 컴파일하는 중입니다.
+          with
+          [
+              _Ty=UInput
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3290,33): message : 'std::unique_ptr<UInput,std::default_delete<UInput>>::~unique_ptr'에서 'std::default_delete<UInput>::operator ()'에 대한 첫 번째 참조를 확인하세요.
+C:\DX11Practice\DX11Practice\App.cpp(11,8): message : 'UApp::Initialize'에서 'std::unique_ptr<UInput,std::default_delete<UInput>>::~unique_ptr'에 대한 첫 번째 참조를 확인하세요.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3215,66): message : 컴파일되는 클래스 템플릿 인스턴스화 'std::default_delete<UInput>'에 대한 참조를 확인하세요.
+C:\DX11Practice\DX11Practice\App.h(19,29): message : 컴파일되는 클래스 템플릿 인스턴스화 'std::unique_ptr<UInput,std::default_delete<UInput>>'에 대한 참조를 확인하세요.
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3179,25): error C2338: static_assert failed: 'can't delete an incomplete type'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\include\memory(3180,9): warning C4150: 불완전한 형식 'UInput'에 대한 포인터를 삭제했습니다. 소멸자가 호출되지 않습니다.
+C:\DX11Practice\DX11Practice\App.h(3,7): message : 'UInput' 선언을 참조하십시오.
