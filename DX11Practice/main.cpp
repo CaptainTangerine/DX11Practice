@@ -17,7 +17,7 @@ BOOL WINAPI ConsoleHandler(DWORD signal)
 	if (signal == CTRL_CLOSE_EVENT || signal == CTRL_C_EVENT)
 	{
 		PostQuitMessage(0);
-		Sleep(1000); 
+		Sleep(50); 
 		return TRUE;
 	}
 	return FALSE;
