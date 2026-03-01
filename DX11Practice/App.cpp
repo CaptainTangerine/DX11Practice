@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Input.h"
 #include "Graphics.h"
+#include "Sphere.h"
 
 bool UApp::Initialize(HINSTANCE hInstance)
 {
@@ -21,6 +22,9 @@ bool UApp::Initialize(HINSTANCE hInstance)
 
 	Graphics = std::make_unique<UGraphics>();
 	Graphics->Initialize(Window->GetHWnd());
+
+	Renderer = std::make_unique<URenderer>(Graphics->GetDevice(), Graphics->GetDeviceContext(), Graphics->GetSwapChain());
+	Renderer->Initialize();
 
 	return true;
 }
@@ -58,10 +62,8 @@ void UApp::Run()
 			UInput::GetInstance().Update();
 			//GameLogic
 
-			//Render
-			Graphics->BeginScene();
-
-			Graphics->EndScene();
+			Renderer->BeginScene();
+			Renderer->EndScene();
 
 		}
 		else
@@ -74,7 +76,11 @@ void UApp::Run()
 
 void UApp::Release()
 {
-
+	if (Renderer)
+	{
+		Renderer->Release();
+		Renderer.reset();
+	}
 	if (Graphics)
 	{
 		Graphics->Release();

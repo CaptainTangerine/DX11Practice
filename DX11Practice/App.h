@@ -5,7 +5,6 @@ class UWindow;
 class URenderer;
 class UGraphics;
 
-
 class UApp
 {
 public:
@@ -23,6 +22,7 @@ private:
 
 	std::unique_ptr<UInput>	   Input;
 	std::unique_ptr<UWindow>   Window;
+
 	std::unique_ptr<UGraphics> Graphics;
 	std::unique_ptr<URenderer> Renderer;
 

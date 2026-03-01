@@ -3,32 +3,17 @@
 
 void UGraphics::Initialize(HWND hWnd)
 {
-    CreateDeviceAnsSwapChain(hWnd);
-    CreateBackBuffer();
-
+    CreateDeviceAndSwapChain(hWnd);
 	return;
 }
 
-void UGraphics::BeginScene()
-{
-    FLOAT ClearColor[4] = { 0.025f, 0.025f, 0.025f, 1.0f };
-    DeviceContext->ClearRenderTargetView(BackBufferRTV, ClearColor);
-
-}
-
-void UGraphics::EndScene()
-{
-    SwapChain->Present(1, 0);
-}
 
 void UGraphics::Release()
 {
-    DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
-    ReleaseBackBuffer();
     ReleaseDeviceAndSwapChain();
 }
 
-void UGraphics::CreateDeviceAnsSwapChain(HWND hWnd)
+void UGraphics::CreateDeviceAndSwapChain(HWND hWnd)
 {
     // 지원하는 Direct3D 기능 레벨을 정의
     D3D_FEATURE_LEVEL featurelevels[] = { D3D_FEATURE_LEVEL_11_0 };
@@ -50,12 +35,6 @@ void UGraphics::CreateDeviceAnsSwapChain(HWND hWnd)
         D3D11_CREATE_DEVICE_BGRA_SUPPORT | D3D11_CREATE_DEVICE_DEBUG,
         featurelevels, ARRAYSIZE(featurelevels), D3D11_SDK_VERSION,
         &swapchaindesc, &SwapChain, &Device, nullptr, &DeviceContext);
-
-    // 생성된 스왑 체인의 정보 가져오기
-    SwapChain->GetDesc(&swapchaindesc);
-
-    // 뷰포트 정보 설정
-    ViewportInfo = { 0.0f, 0.0f, (float)swapchaindesc.BufferDesc.Width, (float)swapchaindesc.BufferDesc.Height, 0.0f, 1.0f };
 
 }
 
@@ -80,32 +59,5 @@ void UGraphics::ReleaseDeviceAndSwapChain()
     {
         Device->Release();
         Device = nullptr;
-    }
-}
-
-void UGraphics::CreateBackBuffer()
-{
-    SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&BackBuffer);
-
-    // 렌더 타겟 뷰 생성
-    D3D11_RENDER_TARGET_VIEW_DESC framebufferRTVdesc = {};
-    framebufferRTVdesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM_SRGB;
-    framebufferRTVdesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-
-    Device->CreateRenderTargetView(BackBuffer, &framebufferRTVdesc, &BackBufferRTV);
-}
-
-void UGraphics::ReleaseBackBuffer()
-{
-    if (BackBuffer)
-    {
-        BackBuffer->Release();
-        BackBuffer = nullptr;
-    }
-
-    if (BackBufferRTV)
-    {
-        BackBufferRTV->Release();
-        BackBufferRTV = nullptr;
     }
 }

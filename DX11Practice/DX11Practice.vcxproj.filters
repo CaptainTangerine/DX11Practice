@@ -19,6 +19,21 @@
     <Filter Include="App\Graphics">
       <UniqueIdentifier>{e3150826-5275-40d2-89c9-88ff397b37e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="App\ShaderManager">
+      <UniqueIdentifier>{a1dcc8db-f6a0-4676-aea5-619cded31942}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\ShaderManager\ShaderFiles">
+      <UniqueIdentifier>{887af805-b075-43bf-930a-02a18d538ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Types">
+      <UniqueIdentifier>{f41064a1-340a-4f9a-b63b-71efddca76e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Types\Vertex">
+      <UniqueIdentifier>{f7948af0-3f24-4bad-a7b6-6e369338e3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Types\Shader">
+      <UniqueIdentifier>{6a4a8866-6c08-4070-9cd2-c8014f24cc83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +57,15 @@
     <ClCompile Include="Graphics.cpp">
       <Filter>App\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>App\ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderTypes.cpp">
+      <Filter>Types\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexTypes.cpp">
+      <Filter>Types\Shader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -62,5 +86,22 @@
     <ClInclude Include="Graphics.h">
       <Filter>App\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>App\ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderTypes.h">
+      <Filter>Types\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexTypes.h">
+      <Filter>Types\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Types\Shader</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ShaderSimple.hlsl">
+      <Filter>App\ShaderManager\ShaderFiles</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
