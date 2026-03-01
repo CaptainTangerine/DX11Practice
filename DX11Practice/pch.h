@@ -19,3 +19,5 @@
 #include <d3dcompiler.h>
 #pragma endregion D3D11_LIB
 
+#include <wrl/client.h>
+using Microsoft::WRL::ComPtr;

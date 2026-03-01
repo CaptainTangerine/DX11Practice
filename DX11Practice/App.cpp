@@ -29,14 +29,15 @@ bool UApp::Initialize(HINSTANCE hInstance)
 
 	Graphics = std::make_unique<UGraphics>();
 	Graphics->Initialize(Window->GetHWnd());
-
+	
 	Renderer = std::make_unique<URenderer>(Graphics->GetDevice(), Graphics->GetDeviceContext(), Graphics->GetSwapChain());
 	Renderer->Initialize();
-
+	
 	LevelManager = std::make_unique<ULevelManager>();
 	LevelManager->ChangeLevel(*Graphics->GetDevice());
 
-	CompileShaderFile();
+	UShaderManager::GetInstance().CompileShaderFile(*Graphics->GetDevice(),
+		TEXT("ShaderSimple.hlsl"), EShaderType::Simple, FVertexSimple::Elements, FVertexSimple::ElementNum);
 
 	return true;
 }
@@ -112,11 +113,4 @@ void UApp::Release()
 		Window->Release();
 		Window.reset();
 	}
-}
-
-void UApp::CompileShaderFile()
-{
-	UShaderManager::GetInstance().CompileShaderFile(*Graphics->GetDevice(), 
-		TEXT("ShaderSimple.hlsl"), EShaderType::Simple, FVertexSimple::Elements, FVertexSimple::ElementNum);
-
 }

@@ -18,9 +18,6 @@ public:
 	void Release();
 
 private:
-	void CompileShaderFile();
-
-private:
 	const int				   TargetFrame = { 60 };
 	float					   DeltaTime   = { 1.f / TargetFrame };
 

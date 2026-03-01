@@ -5,6 +5,7 @@
 #include <crtdbg.h>
 
 #include "App.h"
+#include "ShaderManager.h"
 
 #ifdef _DEBUG
 BOOL WINAPI ConsoleHandler(DWORD signal)
@@ -34,6 +35,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPSTR, _In
 #endif
 
 	UApp app;
+	UShaderManager::GetInstance().CreateInstance();
 
 	if (!app.Initialize(hInstance))
 		return -1;
@@ -41,6 +43,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE, _In_ LPSTR, _In
 	app.Run();
 	app.Release();
 
+	UShaderManager::GetInstance().DestroyInstance();
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();  // 콘솔 닫기 전에 수동 체크!
 	fflush(stdout);

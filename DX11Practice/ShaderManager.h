@@ -13,11 +13,10 @@ private:
 	UShaderManager& operator=(const UShaderManager& rhs) = delete;
 
 public:
-	static UShaderManager& GetInstance()
-	{
-		static UShaderManager Instance;
-		return Instance;
-	}
+	static UShaderManager* GInstance;
+	static UShaderManager& GetInstance() { return *GInstance; }
+	static void CreateInstance() { GInstance = new UShaderManager(); }
+	static void DestroyInstance() { delete GInstance; GInstance = nullptr; }
 	
 public:
 	bool  CompileShaderFile(ID3D11Device& Device, const std::wstring& Filename, EShaderType ShaderType, const D3D11_INPUT_ELEMENT_DESC Layout[], int ElemnetNum);

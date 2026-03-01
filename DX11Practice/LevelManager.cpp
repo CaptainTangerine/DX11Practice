@@ -15,9 +15,8 @@ void ULevelManager::ChangeLevel(ID3D11Device& Device)
 	if (Level)
 	{
 		Level->Release(); 
+		Level.reset();
 	}
-
-	Level.reset();
 	Level = std::make_unique<ULevel>();
 	Level->Initialize(Device);
 }

@@ -30,8 +30,8 @@ void URenderer::BeginScene()
 	DeviceContext->RSSetState(RasterizerState);
 	DeviceContext->OMSetRenderTargets(1, &BackBufferRTV, DepthStensilView);
 
-	//DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	//DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
+	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 }
 
 void URenderer::Render(ULevel& Level)
@@ -39,16 +39,17 @@ void URenderer::Render(ULevel& Level)
 	const auto& ObjectList = Level.GetObjectList();
 
 	const auto SimplePass = UShaderManager::GetInstance().GetShader(EShaderType::Simple);
-
-	DeviceContext->VSSetShader(SimplePass->VS, nullptr, 0 );
-	DeviceContext->PSSetShader(SimplePass->PS, nullptr, 0 );
-	DeviceContext->IASetInputLayout(SimplePass->InputLayout);
-
-	for (const auto& Object : ObjectList)
+	if (SimplePass)
 	{
-		//Object->Render(*DeviceContext);
-	}
+		DeviceContext->VSSetShader(SimplePass->VS, nullptr, 0);
+		DeviceContext->PSSetShader(SimplePass->PS, nullptr, 0);
+		DeviceContext->IASetInputLayout(SimplePass->InputLayout);
 
+		for (const auto& Object : ObjectList)
+		{
+			Object->Render(*DeviceContext);
+		}
+	}
 }
 
 void URenderer::EndScene()
@@ -97,19 +98,20 @@ void URenderer::CreateRenderTargetView()
 	Device->CreateRenderTargetView(BackBuffer, &BackBufferRTVdesc, &BackBufferRTV);
 }
 
-void URenderer::ReleaseRenderTargetView()
+void URenderer::ReleaseRenderTargetView() 
 {
+	if (BackBufferRTV)
+	{
+		BackBufferRTV->Release();
+		BackBufferRTV = nullptr;
+	}
+
 	if (BackBuffer)
 	{
 		BackBuffer->Release();
 		BackBuffer = nullptr;
 	}
 
-	if (BackBufferRTV)
-	{
-		BackBufferRTV->Release();
-		BackBufferRTV = nullptr;
-	}
 }
 
 void URenderer::CreateDepthStensilView()
@@ -136,15 +138,15 @@ void URenderer::CreateDepthStensilView()
 
 void URenderer::ReleaseDepthStensilView()
 {
-	if (DepthBuffer)
-	{
-		DepthBuffer->Release();
-		DepthBuffer = nullptr;
-	}
-
 	if (DepthStensilView)
 	{
 		DepthStensilView->Release();
 		DepthStensilView = nullptr;
+	}
+
+	if (DepthBuffer)
+	{
+		DepthBuffer->Release();
+		DepthBuffer = nullptr;
 	}
 }
