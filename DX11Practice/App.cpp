@@ -4,18 +4,25 @@
 #include "Renderer.h"
 #include "Input.h"
 #include "Graphics.h"
-#include "Sphere.h"
+#include "ShaderManager.h"
+#include "LevelManager.h"
+
+
+UApp::UApp()
+{
+}
+
+UApp::~UApp()
+{
+
+}
 
 bool UApp::Initialize(HINSTANCE hInstance)
 {
+	UInput::GetInstance().Initialize();
+
 	Window = std::make_unique<UWindow>();
 	if (!Window->Initialize(hInstance, 1280, 720))
-	{
-		return false;
-	}
-
-	Input = std::make_unique<UInput>();
-	if (!Input->Initialize())
 	{
 		return false;
 	}
@@ -25,6 +32,11 @@ bool UApp::Initialize(HINSTANCE hInstance)
 
 	Renderer = std::make_unique<URenderer>(Graphics->GetDevice(), Graphics->GetDeviceContext(), Graphics->GetSwapChain());
 	Renderer->Initialize();
+
+	LevelManager = std::make_unique<ULevelManager>();
+	LevelManager->ChangeLevel(*Graphics->GetDevice());
+
+	CompileShaderFile();
 
 	return true;
 }
@@ -63,6 +75,7 @@ void UApp::Run()
 			//GameLogic
 
 			Renderer->BeginScene();
+			Renderer->Render(*LevelManager->GetCurrentLevel());
 			Renderer->EndScene();
 
 		}
@@ -76,6 +89,13 @@ void UApp::Run()
 
 void UApp::Release()
 {
+	UShaderManager::GetInstance().CleanUp();
+
+	if (LevelManager)
+	{
+		LevelManager->Release();
+		LevelManager.reset();
+	}
 	if (Renderer)
 	{
 		Renderer->Release();
@@ -92,10 +112,11 @@ void UApp::Release()
 		Window->Release();
 		Window.reset();
 	}
+}
 
-	if (Input)
-	{
-		Input->Release();
-		Input.reset();
-	}
+void UApp::CompileShaderFile()
+{
+	UShaderManager::GetInstance().CompileShaderFile(*Graphics->GetDevice(), 
+		TEXT("ShaderSimple.hlsl"), EShaderType::Simple, FVertexSimple::Elements, FVertexSimple::ElementNum);
+
 }

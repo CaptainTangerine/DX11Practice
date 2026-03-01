@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "Renderer.h"
+#include "Level.h"
+#include "Object.h"
+#include "ShaderManager.h"
 
 URenderer::URenderer(ID3D11Device* _Device, ID3D11DeviceContext* _DeviceContext, IDXGISwapChain* _SwapChain)
 	: Device(_Device), DeviceContext(_DeviceContext), SwapChain(_SwapChain)
@@ -29,7 +32,24 @@ void URenderer::BeginScene()
 
 	//DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	//DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
-}	
+}
+
+void URenderer::Render(ULevel& Level)
+{
+	const auto& ObjectList = Level.GetObjectList();
+
+	const auto SimplePass = UShaderManager::GetInstance().GetShader(EShaderType::Simple);
+
+	DeviceContext->VSSetShader(SimplePass->VS, nullptr, 0 );
+	DeviceContext->PSSetShader(SimplePass->PS, nullptr, 0 );
+	DeviceContext->IASetInputLayout(SimplePass->InputLayout);
+
+	for (const auto& Object : ObjectList)
+	{
+		//Object->Render(*DeviceContext);
+	}
+
+}
 
 void URenderer::EndScene()
 {

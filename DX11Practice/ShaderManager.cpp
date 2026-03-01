@@ -2,42 +2,38 @@
 #include "ShaderManager.h"
 
 
-bool UShaderManager::CompileShaderFile(ID3D11Device& Device, std::wstring& Filename, EShaderType ShaderType, const D3D11_INPUT_ELEMENT_DESC Layout[], int ElemnetNum)
+bool UShaderManager::CompileShaderFile(ID3D11Device& Device, const std::wstring& Filename, EShaderType ShaderType, const D3D11_INPUT_ELEMENT_DESC Layout[], int ElementNum)
 {
-	FShader ShaderInfo;
+	FShader ShaderInfo = {};
 
-	ID3DBlob* VertexShaderCSO;
-	ID3DBlob* PixelShaderCSO;
+	ID3DBlob* VertexShaderCSO = nullptr;
+	ID3DBlob* PixelShaderCSO = nullptr;
+	ID3DBlob* ErrorBlob = nullptr;
 
-	bool bCompileSuccess = true;
+	// Vertex Shader 컴파일
+	HRESULT hr = D3DCompileFromFile(Filename.c_str(), nullptr, nullptr, "VS_MAIN", "vs_5_0", 0, 0, &VertexShaderCSO, &ErrorBlob);
+	if (ErrorBlob) { ErrorBlob->Release(); ErrorBlob = nullptr; }
+	if (FAILED(hr)) return false;
 
-	D3DCompileFromFile(Filename.c_str(), nullptr, nullptr, "VS_MAIN", "vs_5_0", 0, 0, &VertexShaderCSO, nullptr);
-	if (!Device.CreateVertexShader(VertexShaderCSO->GetBufferPointer(), VertexShaderCSO->GetBufferSize(), nullptr, &ShaderInfo.VS))
-	{
-		bCompileSuccess = false;
-	}
+	hr = Device.CreateVertexShader(VertexShaderCSO->GetBufferPointer(), VertexShaderCSO->GetBufferSize(), nullptr, &ShaderInfo.VS);
+	if (FAILED(hr)) { VertexShaderCSO->Release(); return false; }
 
-	//레이아웃 생성
-	if (!Device.CreateInputLayout(Layout, ElemnetNum, VertexShaderCSO->GetBufferPointer(), VertexShaderCSO->GetBufferSize(), &ShaderInfo.InputLayout))
-	{
-		bCompileSuccess = false;
-	}
-
-	D3DCompileFromFile(Filename.c_str(), nullptr, nullptr, "PS_MAIN", "ps_5_0", 0, 0, &PixelShaderCSO, nullptr);
-	if (!Device.CreatePixelShader(PixelShaderCSO->GetBufferPointer(), PixelShaderCSO->GetBufferSize(), nullptr, &ShaderInfo.PS))
-	{
-		bCompileSuccess = false;
-	}
-
+	// 레이아웃 생성
+	hr = Device.CreateInputLayout(Layout, ElementNum, VertexShaderCSO->GetBufferPointer(), VertexShaderCSO->GetBufferSize(), &ShaderInfo.InputLayout);
 	VertexShaderCSO->Release();
-	VertexShaderCSO->Release();
+	if (FAILED(hr)) { ShaderInfo.VS->Release(); return false; }
 
-	if (bCompileSuccess)
-	{
-		Shaders[ShaderType] = ShaderInfo;
-	}
+	// Pixel Shader 컴파일
+	hr = D3DCompileFromFile(Filename.c_str(), nullptr, nullptr, "PS_MAIN", "ps_5_0", 0, 0, &PixelShaderCSO, &ErrorBlob);
+	if (ErrorBlob) { ErrorBlob->Release(); ErrorBlob = nullptr; }
+	if (FAILED(hr)) { ShaderInfo.VS->Release(); ShaderInfo.InputLayout->Release(); return false; }
 
-	return bCompileSuccess;
+	hr = Device.CreatePixelShader(PixelShaderCSO->GetBufferPointer(), PixelShaderCSO->GetBufferSize(), nullptr, &ShaderInfo.PS);
+	PixelShaderCSO->Release();
+	if (FAILED(hr)) { ShaderInfo.VS->Release(); ShaderInfo.InputLayout->Release(); return false; }
+
+	Shaders[ShaderType] = ShaderInfo;
+	return true;
 }
 
 const FShader* UShaderManager::GetShader(EShaderType eType) const
@@ -49,4 +45,14 @@ const FShader* UShaderManager::GetShader(EShaderType eType) const
 	}
 
 	return &iter->second;
+}
+
+void UShaderManager::CleanUp()
+{
+	for (auto& pair : Shaders) {
+		if (pair.second.VS)          pair.second.VS->Release();
+		if (pair.second.PS)          pair.second.PS->Release();
+		if (pair.second.InputLayout) pair.second.InputLayout->Release();
+	}
+	Shaders.clear();
 }

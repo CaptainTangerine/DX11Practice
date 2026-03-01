@@ -7,7 +7,7 @@ struct VS_INPUT
 
 struct PS_INPUT
 {
-    float position : SV_Position;
+    float4 position : SV_Position;
     float4 color : COLOR;
 };
 
@@ -21,7 +21,7 @@ PS_INPUT VS_MAIN(VS_INPUT input)
     return output;
 }
 
-float4 PS_MAIN(PS_INPUT input)
+float4 PS_MAIN(PS_INPUT input) : SV_Target
 {
     return input.color;
 }

@@ -34,6 +34,30 @@
     <Filter Include="Types\Shader">
       <UniqueIdentifier>{6a4a8866-6c08-4070-9cd2-c8014f24cc83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="App\LevelManager">
+      <UniqueIdentifier>{c6aa0de8-d4ce-40b5-9369-af0b49ed105e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\LevelManager\Level">
+      <UniqueIdentifier>{21c8051e-7b97-4bf3-96e5-5b95d21f2c9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\LevelManager\Object">
+      <UniqueIdentifier>{997393c5-20e7-4940-9500-eb51689fed01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\LevelManager\Object\Component">
+      <UniqueIdentifier>{54083599-b1f9-4274-b741-c643044f1674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\LevelManager\Object\Component\Mesh">
+      <UniqueIdentifier>{764f9f62-b06a-4903-86a8-93d39fbc6e5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\LevelManager\Object\Component\Transform">
+      <UniqueIdentifier>{ff629fba-0fc6-47a3-8499-f5473e735399}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\LevelManager\Object\UBall">
+      <UniqueIdentifier>{d5860bfc-8741-4892-b721-f46f8b6550f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App\Interface">
+      <UniqueIdentifier>{81e23d56-1acf-4166-9a9f-efb25e980eed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,6 +90,33 @@
     <ClCompile Include="VertexTypes.cpp">
       <Filter>Types\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>App\LevelManager\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>App\LevelManager\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>App\LevelManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>App\LevelManager\Object\Component\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>App\LevelManager\Object\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>App\LevelManager\Object\Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>App\LevelManager\Object\UBall</Filter>
+    </ClCompile>
+    <ClCompile Include="Updatable.cpp">
+      <Filter>App\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderable.cpp">
+      <Filter>App\Interface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -97,6 +148,33 @@
     </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Types\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>App\LevelManager\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>App\LevelManager\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>App\LevelManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>App\LevelManager\Object\Component\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>App\LevelManager\Object\Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>App\LevelManager\Object\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>App\LevelManager\Object\UBall</Filter>
+    </ClInclude>
+    <ClInclude Include="Updatable.h">
+      <Filter>App\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>App\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

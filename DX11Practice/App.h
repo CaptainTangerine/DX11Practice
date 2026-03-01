@@ -4,12 +4,13 @@ class UInput;
 class UWindow;
 class URenderer;
 class UGraphics;
+class ULevelManager;
 
 class UApp
 {
 public:
-	UApp()  = default;
-	~UApp() = default;
+	UApp();
+	~UApp();
 
 public:
 	bool Initialize(HINSTANCE hInstance);
@@ -17,13 +18,16 @@ public:
 	void Release();
 
 private:
+	void CompileShaderFile();
+
+private:
 	const int				   TargetFrame = { 60 };
 	float					   DeltaTime   = { 1.f / TargetFrame };
 
-	std::unique_ptr<UInput>	   Input;
 	std::unique_ptr<UWindow>   Window;
 
 	std::unique_ptr<UGraphics> Graphics;
 	std::unique_ptr<URenderer> Renderer;
+	std::unique_ptr<ULevelManager> LevelManager;
 
 };

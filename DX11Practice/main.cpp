@@ -4,11 +4,6 @@
 #include <cstdlib>
 #include <crtdbg.h>
 
-#include "Window.h"
-#include "Input.h"
-#include "Graphics.h"
-#include "Renderer.h"
-
 #include "App.h"
 
 #ifdef _DEBUG

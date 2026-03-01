@@ -1,4 +1,6 @@
 #pragma once
+class ULevel;
+
 class URenderer
 {
 public:
@@ -8,6 +10,7 @@ public:
 	void Initialize();
 
 	void BeginScene();
+	void Render(ULevel& Level);
 	void EndScene();
 
 	void Release();
